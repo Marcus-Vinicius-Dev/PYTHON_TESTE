@@ -3,101 +3,13 @@
 USE CEPEA_SAS
 
 /*
+INTERIOR	URE FRANCA 	20504	0	900667	35900667	64166	SUDARIO FERREIRA
 
-SELECT
-     REGIAO            ,
-     NOMEDE            ,
-     CODESC            ,
-     UA                ,
-     NOMEESC           ,
-     TPESC             ,
-     OBS1              ,
-     MODAL             ,
-     TURNOS            ,
-     CH1               ,
-     ANO1              ,
-     INICIO1           ,
-     CATESC            ,
-     DZ_ZONA           ,
-     -- DS_TIPO_LOGRADOURO,
-     RUA               ,
-     NUM               ,
-     BAIRRO            ,
-     MUN               ,
-     NOMEMUN           ,
-     CEP               ,
-     CD_DISTRITO       ,
-     NM_DISTRITO       ,
-     DDD               ,
-     TELEFONE          ,
-     NR_AREA_CONSTRUCAO,
-     LIMPEZA           ,
-     MERENDA           ,
-     ESCFAM            ,
-     ALE               ,
-     VULN_QM           ,
-     UBV_QM            ,
-     FATOR_QM          ,
-     VALOR_QM          ,
-     VULN_QAE          ,
-     UBV_QAE           ,
-     FATOR_QAE         ,
-     VALOR_QAE         ,
-     TTCLASSEMAN       ,
-     TTALUNOMAN        ,
-     TTCLASSEITE       ,
-     TTALUNOITE        ,
-     TTCLASSETAR       ,
-     TTALUNOTAR        ,
-     TTCLASSEVES       ,
-     TTALUNOVES        ,
-     TTCLASSENOT       ,
-     TTALUNONOT        ,
-     TTCLASSEINTIN     ,
-     TTALUNOINTIN      ,
-     TTCLASSEINTFI     ,
-     TTALUNOINTFI      ,
-     TTCLASSEINTEM     ,
-     TTALUNOINTEM      ,
-     TTCLASSEINT       ,
-     TTALUNOINT        ,
-     MODALPEI          ,
-     TTCLASSECEL       ,
-     TTALUNOCEL        ,
-     TTCLASSEITI       ,
-     TTALUNOITI        ,
-     TTCLASSEREC       ,
-     TTALUNOREC        ,
-     TTCLASSETEC       ,
-     TTALUNOTEC        ,
-     TTCLASSEHIB       ,
-     TTALUNOHIB        ,
-     TTCLASSEIF        ,
-     TTALUNOIF         ,
-     TTCLASSEEXP       ,
-     TTALUNOEXP        ,
-     TTCLASSEEJA       ,
-     TTALUNOEJA        ,
-     TTCLASSEEJAT      ,
-     TTALUNOEJAT       ,
-     TTCLASSEQPTEC     ,
-     TTALUNOQPTEC      ,
-     TTCLASSEPEC       ,
-     TTALUNOPEC        ,
-     TTCLASSEEI        ,
-     TTALUNOEI         ,
-     TTCLASSEIN        ,
-     TTALUNOIN         ,
-     TTCLASSEFI        ,
-     TTALUNOFI         ,
-     TTCLASSEEM        ,
-     TTALUNOEM         ,
-     TTCLASSEG         ,
-     TTALUNOG          
-FROM ESCOLAS0726
-WHERE NOMEESC LIKE '%Chiquinha Rodrigues%'
+SELECT top 10 *          
+FROM ESCOLAS0826 
+WHERE NOMEESC LIKE '%SUDARIO%'
 
-*/
+
 
 SELECT DISTINCT
     ANO_TABELA,
@@ -110,5 +22,16 @@ SELECT DISTINCT
     NUM_LINHAS,
     END_COMPLETO
 FROM [00_MAP]
-WHERE END_COMPLETO LIKE '%mun%'  OR COLUNA LIKE '%mun%'
-ORDER BY ANO_TABELA DESC, BD, ESQUEMA, TABELA DESC , COLUNA 
+WHERE END_COMPLETO LIKE '%ESCOLA%'  OR COLUNA LIKE '%ESCOLA%'
+ORDER BY ANO_TABELA DESC, BD, ESQUEMA, TABELA DESC , COLUNA
+
+
+*/
+
+--1340
+
+
+SELECT TOP 10 * FROM DB_CENSO_DESENVOLVIMENTO.[ColetaDados].[TB_DadosEscola] 
+WHERE NomeCompletoEscola LIKE '%MATTATHIAS%'
+OR NomeCompletoEscola LIKE '%SUDARIO FERREIRA%'
+

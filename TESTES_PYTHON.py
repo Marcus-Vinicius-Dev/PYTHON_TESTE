@@ -49,11 +49,58 @@ init(autoreset=True) # reseta a cor no próximo print
 
 
 
+pasta_arquivo = os.chdir(r'C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER')
+pasta_trecho = os.path.basename(r'C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER')
+arquivo_excel = 'CHOR_MATTATHIAS.xlsx'
+abas = pd.read_excel(arquivo_excel, sheet_name=None)
+# print(Fore.GREEN + f"\nUSANDO ARQUIVO '{arquivo_excel}' DA PASTA '{pasta_trecho}'")
+# print(Fore.RED + f"\nO ARQUIVO POSSUI {len(abas)} ABAS")
+# for i, (nome, df) in enumerate(abas.items(), 1):
+#     print(Fore.WHITE + f"  {i}. {nome}")
+#     print(Fore.WHITE + f"     Linhas: {len(df)}")
+#     print(Fore.WHITE + f"     Colunas: {len(df.columns)}")
+#     print(Fore.WHITE + f"     Colunas: {list(df.columns)[:3]}...")
+#     print()
 
-pasta_destino = os.chdir(r'C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER')
-arquivo_excel = 'UDEMO_TESTES.xlsx'
-df = pd.read_excel(arquivo_excel, sheet_name=0)  # 0 = primeira aba
+aba_selecionada = 'sheet1'  # Nome da aba que deseja selecionar
+df = pd.read_excel(arquivo_excel, sheet_name=aba_selecionada)  # Carrega apenas a aba escolhida
+# print(Fore.GREEN + f"\n✅ ABA SELECIONADA: '{aba_selecionada}'")
+# print(Fore.WHITE + f"   Linhas: {len(df)}")
+# print(Fore.WHITE + f"   Total de Colunas: {len(df.columns)}")
+# print(Fore.WHITE + f"   Colunas: {list(df.columns)}")
 
+
+"""
+O ARQUIVO POSSUI 1 ABAS
+  1. sheet1
+     Linhas: 388
+     Colunas: 22
+     Colunas: ['ESCOLA', 'CPF', 'DI']...
+
+   Linhas: 388
+   Total de Colunas: 22
+   Colunas: ['ESCOLA', 'CPF', 'DI', 'ID', 'NOME', 'CARGO_C', 'CATEG_C', 'DTIEXER_C', 'CARGO_E', 'CATEG_E', 'DISCIPLINA', 'JORNADA', 'MATERIA', 'CODMAE', 'TT_AULAS_LIVRES', 
+   'TT_AULAS_SUBST', 'QTDE_AULAS_ATRIB_QA', 'SEXO', 'DT_NASC', 'IDADE', 'COR', 'TIPODEF_DESC']
+
+                            ESCOLA   CPF           DI  ID       NOME                           CARGO_C                                         ... QTDE_AULAS_ATRIB_QA  SEXO  DT_NASC       IDADE  COR            TIPODEF_DESC
+0  MATTATHIAS GOMES DOS SANTOS REV   41076127835   1   2702017  ACHILLE GIUSEPPE GALLO INGRAO  5774 - PROFESSOR DE ENSINO FUNDAMENTAL E MEDIO  ... 3                     M    04/06/1994    32     B - BRANCA     NaN   
+     
+"""
+
+# SELECT * FROM df
+print(Fore.GREEN + "\n📊 SELECT *:")
+print(Fore.WHITE + f"   Total de registros: {len(df)}")
+print(Fore.WHITE + f"   Total de colunas: {len(df.columns)}")
+print(Fore.CYAN + f"\n{df}")
+
+###############################################################################################
+
+
+
+# SQL: LEFT(NOME, 5)
+df['nome_5'] = df['NOME'].str[:5]
+print(Fore.GREEN + f"\n📊 LEFT(NOME, {2:3}) - Primeiros {2} caracteres:")
+print(Fore.CYAN + f"{df[['NOME', 'nome_5']].head()}")
 
 
 
