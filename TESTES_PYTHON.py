@@ -49,20 +49,20 @@ init(autoreset=True) # reseta a cor no próximo print
 
 
 
-pasta_arquivo = os.chdir(r'C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER')
-pasta_trecho = os.path.basename(r'C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER')
+pasta_arquivo = os.chdir(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE')
+pasta_trecho = os.path.basename(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE')
 arquivo_excel = 'CHOR_MATTATHIAS.xlsx'
 abas = pd.read_excel(arquivo_excel, sheet_name=None)
-# print(Fore.GREEN + f"\nUSANDO ARQUIVO '{arquivo_excel}' DA PASTA '{pasta_trecho}'")
-# print(Fore.RED + f"\nO ARQUIVO POSSUI {len(abas)} ABAS")
-# for i, (nome, df) in enumerate(abas.items(), 1):
-#     print(Fore.WHITE + f"  {i}. {nome}")
-#     print(Fore.WHITE + f"     Linhas: {len(df)}")
-#     print(Fore.WHITE + f"     Colunas: {len(df.columns)}")
-#     print(Fore.WHITE + f"     Colunas: {list(df.columns)[:3]}...")
-#     print()
+#print(Fore.GREEN + f"\nUSANDO ARQUIVO '{arquivo_excel}' DA PASTA '{pasta_trecho}'")
+#print(Fore.RED + f"\nO ARQUIVO POSSUI {len(abas)} ABAS")
+#for i, (nome, df) in enumerate(abas.items(), 1):
+#    print(Fore.WHITE + f"  {i}. {nome}")
+#    print(Fore.WHITE + f"     Linhas: {len(df)}")
+#    print(Fore.WHITE + f"     Colunas: {len(df.columns)}")
+#    print(Fore.WHITE + f"     Colunas: {list(df.columns)[:3]}...")
+#    print()
 
-aba_selecionada = 'sheet1'  # Nome da aba que deseja selecionar
+aba_selecionada = '2026'  # Nome da aba que deseja selecionar
 df = pd.read_excel(arquivo_excel, sheet_name=aba_selecionada)  # Carrega apenas a aba escolhida
 # print(Fore.GREEN + f"\n✅ ABA SELECIONADA: '{aba_selecionada}'")
 # print(Fore.WHITE + f"   Linhas: {len(df)}")
@@ -72,19 +72,16 @@ df = pd.read_excel(arquivo_excel, sheet_name=aba_selecionada)  # Carrega apenas 
 
 """
 O ARQUIVO POSSUI 1 ABAS
-  1. sheet1
-     Linhas: 388
-     Colunas: 22
-     Colunas: ['ESCOLA', 'CPF', 'DI']...
+  1. 2026
+     Linhas: 128
+     Colunas: 10
+     Colunas: ['NOMEESC', 'ID_INTERNO', 'CARGO_C']...
 
-   Linhas: 388
-   Total de Colunas: 22
-   Colunas: ['ESCOLA', 'CPF', 'DI', 'ID', 'NOME', 'CARGO_C', 'CATEG_C', 'DTIEXER_C', 'CARGO_E', 'CATEG_E', 'DISCIPLINA', 'JORNADA', 'MATERIA', 'CODMAE', 'TT_AULAS_LIVRES', 
-   'TT_AULAS_SUBST', 'QTDE_AULAS_ATRIB_QA', 'SEXO', 'DT_NASC', 'IDADE', 'COR', 'TIPODEF_DESC']
-
-                            ESCOLA   CPF           DI  ID       NOME                           CARGO_C                                         ... QTDE_AULAS_ATRIB_QA  SEXO  DT_NASC       IDADE  COR            TIPODEF_DESC
-0  MATTATHIAS GOMES DOS SANTOS REV   41076127835   1   2702017  ACHILLE GIUSEPPE GALLO INGRAO  5774 - PROFESSOR DE ENSINO FUNDAMENTAL E MEDIO  ... 3                     M    04/06/1994    32     B - BRANCA     NaN   
-     
+✅ ABA SELECIONADA: '2026'
+   Linhas: 128
+   Total de Colunas: 10
+   Colunas: ['NOMEESC', 'ID_INTERNO', 'CARGO_C', 'NM_CARGOC', 'MATERIA', 'DEN_MATERIA', 'TOT_AULA_LIVRE', 'TOT_AULA_SUBST', 'TOT_GERAL_AULA', 'JORNADA']
+    
 """
 
 # SELECT * FROM df
@@ -96,11 +93,12 @@ print(Fore.CYAN + f"\n{df}")
 ###############################################################################################
 
 
+substituicoes = {'CAO': 'ÇÃO', 'ME': 'MÉ', 'BAS': 'BÁS', 'II':'2', 'PROFESSOR':'PROFESSOR DE'}  # Dicionário de substituições
+df['NOVA_COLUNA'] = df['NM_CARGOC'].replace(substituicoes, regex=True)  # Substitui todos de uma vez
+print(Fore.GREEN + f"\n📊 SUBSTITUIÇÕES MÚLTIPLAS:")
+print(Fore.WHITE + f"   Dicionário: {substituicoes}")
+print(Fore.CYAN + f"{df[['NM_CARGOC', 'NOVA_COLUNA']].head()}")
 
-# SQL: LEFT(NOME, 5)
-df['nome_5'] = df['NOME'].str[:5]
-print(Fore.GREEN + f"\n📊 LEFT(NOME, {2:3}) - Primeiros {2} caracteres:")
-print(Fore.CYAN + f"{df[['NOME', 'nome_5']].head()}")
 
 
 
