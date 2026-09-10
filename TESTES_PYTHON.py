@@ -103,10 +103,7 @@ print(Fore.GREEN + f"\n📊 SUBSTITUIÇÕES MÚLTIPLAS:")
 print(Fore.WHITE + f"   Dicionário: {substituicoes}")
 print(Fore.CYAN + f"{df[['NM_CARGOC', 'NOVA_COLUNA']].head()}")
 
-# SQL: LEFT(NOME, 5)
-df['nome_5'] = df['NOME'].str[:5]
-print(Fore.GREEN + f"\n📊 LEFT(NOME, {2:3}) - Primeiros {2} caracteres:")
-print(Fore.CYAN + f"{df[['NOME', 'nome_5']].head()}")
+
 
 
 
