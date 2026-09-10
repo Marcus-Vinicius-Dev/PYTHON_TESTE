@@ -1,11 +1,12 @@
-# python -m venv venv (cria venv se necessário)
-# .\.venv\Scripts\Activate (ativa a venv)
+# Remove-Item -Recurse -Force .venv (Remover o .venv antigo)
+# python -m venv venv (cria venv)
+# .venv\Scripts\Activate.ps1 (ativa a venv)
 # deactivate (desativa venv)
 # pip install -r requirements.txt
 # python -m pip install --force-reinstall --no-cache-dir -r requirements.txt
 # Start-Process "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" -ArgumentList "--remote-debugging-port=9222", "--user-data-dir=C:\edge-debug"
-# cd C:\Users\vinic\Desktop\Python\WebScraping01
-# python TESTES_SCRAPING.py
+# cd C:\Users\vinic\Desktop\GIT\PYTHON_TESTE
+# python TESTES_PYTHON.py
 
 # sys
 from colorama import init, Fore, Back, Style
@@ -49,7 +50,7 @@ init(autoreset=True) # reseta a cor no próximo print
 
 
 
-pasta_arquivo = os.chdir(r'C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER')
+pasta_arquivo = os.chdir(r'C:\Users\vinic\Desktop\teste')
 pasta_trecho = os.path.basename(r'C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER')
 arquivo_excel = 'CHOR_MATTATHIAS.xlsx'
 abas = pd.read_excel(arquivo_excel, sheet_name=None)
@@ -97,10 +98,9 @@ print(Fore.CYAN + f"\n{df}")
 
 
 
-# SQL: LEFT(NOME, 5)
-df['nome_5'] = df['NOME'].str[:5]
-print(Fore.GREEN + f"\n📊 LEFT(NOME, {2:3}) - Primeiros {2} caracteres:")
-print(Fore.CYAN + f"{df[['NOME', 'nome_5']].head()}")
+# SELECT TOP 10 DA ABA SELECIONADA
+print(Fore.GREEN + f"\n📊 TOP 10 REGISTROS:")
+print(df.head(10))
 
 
 
