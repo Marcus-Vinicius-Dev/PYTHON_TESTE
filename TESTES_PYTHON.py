@@ -1,11 +1,12 @@
-# python -m venv venv (cria venv se necessário)
-# .\.venv\Scripts\Activate (ativa a venv)
 # deactivate (desativa venv)
+# !!!SE NECESSÁRIO!!! Remove-Item -Recurse -Force venv (Remover o .venv)
+# python -m venv venv (cria venv)
+# venv\Scripts\Activate.ps1 (ativa a venv)
 # pip install -r requirements.txt
 # python -m pip install --force-reinstall --no-cache-dir -r requirements.txt
 # Start-Process "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" -ArgumentList "--remote-debugging-port=9222", "--user-data-dir=C:\edge-debug"
-# cd C:\Users\vinic\Desktop\Python\WebScraping01
-# python TESTES_SCRAPING.py
+# cd C:\Users\vinic\Desktop\GIT\PYTHON_TESTE
+# python TESTES_PYTHON.py
 
 # sys
 from colorama import init, Fore, Back, Style
@@ -49,8 +50,8 @@ init(autoreset=True) # reseta a cor no próximo print
 
 
 
-pasta_arquivo = os.chdir(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE')
-pasta_trecho = os.path.basename(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE')
+pasta_arquivo = os.chdir(r'C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER')
+pasta_trecho = os.path.basename(r'C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER')
 arquivo_excel = 'CHOR_MATTATHIAS.xlsx'
 abas = pd.read_excel(arquivo_excel, sheet_name=None)
 #print(Fore.GREEN + f"\nUSANDO ARQUIVO '{arquivo_excel}' DA PASTA '{pasta_trecho}'")
@@ -62,26 +63,29 @@ abas = pd.read_excel(arquivo_excel, sheet_name=None)
 #    print(Fore.WHITE + f"     Colunas: {list(df.columns)[:3]}...")
 #    print()
 
-aba_selecionada = '2026'  # Nome da aba que deseja selecionar
+aba_selecionada = 'sheet1'  # Nome da aba que deseja selecionar
 df = pd.read_excel(arquivo_excel, sheet_name=aba_selecionada)  # Carrega apenas a aba escolhida
-# print(Fore.GREEN + f"\n✅ ABA SELECIONADA: '{aba_selecionada}'")
-# print(Fore.WHITE + f"   Linhas: {len(df)}")
-# print(Fore.WHITE + f"   Total de Colunas: {len(df.columns)}")
-# print(Fore.WHITE + f"   Colunas: {list(df.columns)}")
+#print(Fore.GREEN + f"\n✅ ABA SELECIONADA: '{aba_selecionada}'")
+#print(Fore.WHITE + f"   Linhas: {len(df)}")
+#print(Fore.WHITE + f"   Total de Colunas: {len(df.columns)}")
+#print(Fore.WHITE + f"   Colunas: {list(df.columns)}")
 
 
 """
 O ARQUIVO POSSUI 1 ABAS
-  1. 2026
-     Linhas: 128
-     Colunas: 10
-     Colunas: ['NOMEESC', 'ID_INTERNO', 'CARGO_C']...
+  1. sheet1
+     Linhas: 388
+     Colunas: 22
+     Colunas: ['ESCOLA', 'CPF', 'DI']...
 
-✅ ABA SELECIONADA: '2026'
-   Linhas: 128
-   Total de Colunas: 10
-   Colunas: ['NOMEESC', 'ID_INTERNO', 'CARGO_C', 'NM_CARGOC', 'MATERIA', 'DEN_MATERIA', 'TOT_AULA_LIVRE', 'TOT_AULA_SUBST', 'TOT_GERAL_AULA', 'JORNADA']
-    
+   Linhas: 388
+   Total de Colunas: 22
+   Colunas: ['ESCOLA', 'CPF', 'DI', 'ID', 'NOME', 'CARGO_C', 'CATEG_C', 'DTIEXER_C', 'CARGO_E', 'CATEG_E', 'DISCIPLINA', 'JORNADA', 'MATERIA', 'CODMAE', 'TT_AULAS_LIVRES', 
+   'TT_AULAS_SUBST', 'QTDE_AULAS_ATRIB_QA', 'SEXO', 'DT_NASC', 'IDADE', 'COR', 'TIPODEF_DESC']
+
+                            ESCOLA   CPF           DI  ID       NOME                           CARGO_C                                         ... QTDE_AULAS_ATRIB_QA  SEXO  DT_NASC       IDADE  COR            TIPODEF_DESC
+0  MATTATHIAS GOMES DOS SANTOS REV   41076127835   1   2702017  ACHILLE GIUSEPPE GALLO INGRAO  5774 - PROFESSOR DE ENSINO FUNDAMENTAL E MEDIO  ... 3                     M    04/06/1994    32     B - BRANCA     NaN   
+     
 """
 
 # SELECT * FROM df
@@ -99,6 +103,10 @@ print(Fore.GREEN + f"\n📊 SUBSTITUIÇÕES MÚLTIPLAS:")
 print(Fore.WHITE + f"   Dicionário: {substituicoes}")
 print(Fore.CYAN + f"{df[['NM_CARGOC', 'NOVA_COLUNA']].head()}")
 
+# SQL: LEFT(NOME, 5)
+df['nome_5'] = df['NOME'].str[:5]
+print(Fore.GREEN + f"\n📊 LEFT(NOME, {2:3}) - Primeiros {2} caracteres:")
+print(Fore.CYAN + f"{df[['NOME', 'nome_5']].head()}")
 
 
 
