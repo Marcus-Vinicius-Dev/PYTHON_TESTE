@@ -1,7 +1,7 @@
-# Remove-Item -Recurse -Force .venv (Remover o .venv antigo)
-# python -m venv venv (cria venv)
-# .venv\Scripts\Activate.ps1 (ativa a venv)
 # deactivate (desativa venv)
+# !!!SE NECESSÁRIO!!! Remove-Item -Recurse -Force venv (Remover o .venv)
+# python -m venv venv (cria venv)
+# venv\Scripts\Activate.ps1 (ativa a venv)
 # pip install -r requirements.txt
 # python -m pip install --force-reinstall --no-cache-dir -r requirements.txt
 # Start-Process "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" -ArgumentList "--remote-debugging-port=9222", "--user-data-dir=C:\edge-debug"
@@ -54,34 +54,37 @@ pasta_arquivo = os.chdir(r'C:\Users\vinic\Desktop\teste')
 pasta_trecho = os.path.basename(r'C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER')
 arquivo_excel = 'CHOR_MATTATHIAS.xlsx'
 abas = pd.read_excel(arquivo_excel, sheet_name=None)
-# print(Fore.GREEN + f"\nUSANDO ARQUIVO '{arquivo_excel}' DA PASTA '{pasta_trecho}'")
-# print(Fore.RED + f"\nO ARQUIVO POSSUI {len(abas)} ABAS")
-# for i, (nome, df) in enumerate(abas.items(), 1):
-#     print(Fore.WHITE + f"  {i}. {nome}")
-#     print(Fore.WHITE + f"     Linhas: {len(df)}")
-#     print(Fore.WHITE + f"     Colunas: {len(df.columns)}")
-#     print(Fore.WHITE + f"     Colunas: {list(df.columns)[:3]}...")
-#     print()
+#print(Fore.GREEN + f"\nUSANDO ARQUIVO '{arquivo_excel}' DA PASTA '{pasta_trecho}'")
+#print(Fore.RED + f"\nO ARQUIVO POSSUI {len(abas)} ABAS")
+#for i, (nome, df) in enumerate(abas.items(), 1):
+#    print(Fore.WHITE + f"  {i}. {nome}")
+#    print(Fore.WHITE + f"     Linhas: {len(df)}")
+#    print(Fore.WHITE + f"     Colunas: {len(df.columns)}")
+#    print(Fore.WHITE + f"     Colunas: {list(df.columns)[:3]}...")
+#    print()
 
-aba_selecionada = 'sheet1'  # Nome da aba que deseja selecionar
+aba_selecionada = 'Plan1'  # Nome da aba que deseja selecionar
 df = pd.read_excel(arquivo_excel, sheet_name=aba_selecionada)  # Carrega apenas a aba escolhida
-# print(Fore.GREEN + f"\n✅ ABA SELECIONADA: '{aba_selecionada}'")
-# print(Fore.WHITE + f"   Linhas: {len(df)}")
-# print(Fore.WHITE + f"   Total de Colunas: {len(df.columns)}")
-# print(Fore.WHITE + f"   Colunas: {list(df.columns)}")
+#print(Fore.GREEN + f"\n✅ ABA SELECIONADA: '{aba_selecionada}'")
+#print(Fore.WHITE + f"   Linhas: {len(df)}")
+#print(Fore.WHITE + f"   Total de Colunas: {len(df.columns)}")
+#print(Fore.WHITE + f"   Colunas: {list(df.columns)}")
 
 
 """
 O ARQUIVO POSSUI 1 ABAS
-  1. sheet1
-     Linhas: 388
-     Colunas: 22
-     Colunas: ['ESCOLA', 'CPF', 'DI']...
+  1. Plan1
+     Linhas: 128
+     Colunas: 25
+     Colunas: ['REGIAO', 'NOMEDE', 'CD_INEP']...
 
-   Linhas: 388
-   Total de Colunas: 22
-   Colunas: ['ESCOLA', 'CPF', 'DI', 'ID', 'NOME', 'CARGO_C', 'CATEG_C', 'DTIEXER_C', 'CARGO_E', 'CATEG_E', 'DISCIPLINA', 'JORNADA', 'MATERIA', 'CODMAE', 'TT_AULAS_LIVRES', 
-   'TT_AULAS_SUBST', 'QTDE_AULAS_ATRIB_QA', 'SEXO', 'DT_NASC', 'IDADE', 'COR', 'TIPODEF_DESC']
+✅ ABA SELECIONADA: 'Plan1'
+   Linhas: 128
+   Total de Colunas: 25
+   Colunas: ['REGIAO', 'NOMEDE', 'CD_INEP', 'CODESC', 'CATESC', 'TPESC', 'UA', 'NOMEESC', 'NM_MUNICIPIO', 
+   'MODAL', 'CARGO_C', 'NM_CARGOC', 'CODMAE', 'DEN_CODMAE', 'DEN_CICLO', 'MATERIA', 'DEN_MATERIA', 
+   'TOT_AULA_LIVRE', 'TOT_AULA_SUBST', 'TOT_GERAL_AULA', 'TOT_AULA_LIVRE_NOTURNO', 'TOT_AULA_SUBST_NOTURNO', 
+   'TOT_AULAS_NOTURNO', 'JORNADA', 'ID_INTERNO']
 
                             ESCOLA   CPF           DI  ID       NOME                           CARGO_C                                         ... QTDE_AULAS_ATRIB_QA  SEXO  DT_NASC       IDADE  COR            TIPODEF_DESC
 0  MATTATHIAS GOMES DOS SANTOS REV   41076127835   1   2702017  ACHILLE GIUSEPPE GALLO INGRAO  5774 - PROFESSOR DE ENSINO FUNDAMENTAL E MEDIO  ... 3                     M    04/06/1994    32     B - BRANCA     NaN   
@@ -98,9 +101,13 @@ print(Fore.CYAN + f"\n{df}")
 
 
 
-# SELECT TOP 10 DA ABA SELECIONADA
-print(Fore.GREEN + f"\n📊 TOP 10 REGISTROS:")
-print(df.head(10))
+# Extrai números: r'(\d+)', letras: r'([A-Z]+)', etc.
+df['NOVA_COLUNA'] = df['NM_CARGOC'].str.extract(r'([A-Z]+)')
+print(Fore.GREEN + f"\n📊 EXTRAINDO COM REGEX:")
+print(Fore.CYAN + f"{df[['NM_CARGOC', 'NOVA_COLUNA']].head()}")
+
+
+
 
 
 
