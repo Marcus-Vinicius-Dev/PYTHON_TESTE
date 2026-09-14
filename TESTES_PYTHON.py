@@ -51,32 +51,32 @@ init(autoreset=True) # reseta a cor no próximo print
 
 
 ###################################################################### CHOR_MATTATHIAS ######################################################################
-pasta_arquivo = os.chdir(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE') # C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER
-pasta_trecho = os.path.basename(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE') # C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER
+pasta_arquivo = os.chdir(r'C:\Users\vinic\Desktop\GIT\PYTHON_TESTE') # C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE
+pasta_trecho = os.path.basename(r'{pasta_arquivo}') 
 arquivo_excel = 'CHOR_MATTATHIAS.xlsx'
 abas = pd.read_excel(arquivo_excel, sheet_name=None)
-print(Fore.GREEN + f"\nUSANDO ARQUIVO '{arquivo_excel}' DA PASTA '{pasta_trecho}'")
-print(Fore.RED + f"\nO ARQUIVO POSSUI {len(abas)} ABA(S)")
-for i, (nome, df) in enumerate(abas.items(), 1):
-    print(Fore.WHITE + f"  {i}. {nome}")
-    print(Fore.WHITE + f"     Linhas: {len(df)}")
-    print(Fore.WHITE + f"     Colunas: {len(df.columns)}")
-    print(Fore.WHITE + f"     Colunas: {list(df.columns)[:3]}...")
-    print()
+# print(Fore.GREEN + f"\nUSANDO ARQUIVO '{arquivo_excel}' DA PASTA '{pasta_trecho}'")
+# print(Fore.RED + f"\nO ARQUIVO POSSUI {len(abas)} ABA(S)")
+# for i, (nome, df) in enumerate(abas.items(), 1):
+#     print(Fore.WHITE + f"  {i}. {nome}")
+#     print(Fore.WHITE + f"     Linhas: {len(df)}")
+#     print(Fore.WHITE + f"     Colunas: {len(df.columns)}")
+#     print(Fore.WHITE + f"     Colunas: {list(df.columns)[:3]}...")
+#     print()
 
 aba_selecionada = '2026'  # Nome da aba que deseja selecionar
 df = pd.read_excel(arquivo_excel, sheet_name=aba_selecionada)  # Carrega apenas a aba escolhida
-print(Fore.GREEN + f"\n✅ ABA SELECIONADA: '{aba_selecionada}'")
-print(Fore.WHITE + f"   Linhas: {len(df)}")
-print(Fore.WHITE + f"   Total de Colunas: {len(df.columns)}")
-print(Fore.WHITE + f"   Colunas: {list(df.columns)}")
+# print(Fore.GREEN + f"\n✅ ABA SELECIONADA: '{aba_selecionada}'")
+# print(Fore.WHITE + f"   Linhas: {len(df)}")
+# print(Fore.WHITE + f"   Total de Colunas: {len(df.columns)}")
+# print(Fore.WHITE + f"   Colunas: {list(df.columns)}")
 
 
 # SELECT * FROM df
-print(Fore.GREEN + "\n📊 SELECT *:")
-print(Fore.WHITE + f"   Total de registros: {len(df)}")
-print(Fore.WHITE + f"   Total de colunas: {len(df.columns)}")
-print(Fore.CYAN + f"\n{df}")
+# print(Fore.GREEN + "\n📊 SELECT *:")
+# print(Fore.WHITE + f"   Total de registros: {len(df)}")
+# print(Fore.WHITE + f"   Total de colunas: {len(df.columns)}")
+# print(Fore.CYAN + f"\n{df}")
 
 
 """
@@ -102,8 +102,8 @@ O ARQUIVO POSSUI 1 ABA(S)
 ###################################################################### CHOR_MATTATHIAS ######################################################################
 
 ###################################################################### CTG_MATTATHIAS ######################################################################
-pasta_arquivo_2 = os.chdir(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE') # C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER
-pasta_trecho_2 = os.path.basename(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE') # C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER
+pasta_arquivo_2 = os.chdir(r'C:\Users\vinic\Desktop\GIT\PYTHON_TESTE') # C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE
+pasta_trecho_2 = os.path.basename(r'{pasta_arquivo_2}') 
 arquivo_excel_2 = 'CTG_MATTATHIAS.xlsx'
 abas_2 = pd.read_excel(arquivo_excel_2, sheet_name=None)
 # print(Fore.GREEN + f"\nUSANDO ARQUIVO '{arquivo_excel_2}' DA PASTA '{pasta_trecho_2}'")
@@ -161,51 +161,48 @@ df_3 = pd.read_excel(arquivo_excel_2, sheet_name=aba_selecionada_3)  # Carrega a
 
 """
 
-###################################################################### CTG_MATTATHIAS ######################################################################
-
-
 # ============================================================================
-# LEFT JOIN (equivalente SQL)
+# JOIN CORRETO: CHOR (df) + CTG_CLASSIFICADOS (df_2) + CTG_EXERCICIO (df_3)
 # ============================================================================
-# SQL: LEFT JOIN CTG_MATTATHIAS B ON A.ID_INTERNO = B.ID_INTERNO
 
 df_join = pd.merge(
-    df_3,                    
-    df_2,                  
+    df_2,                    
+    df_3,                  
     on=['ID_INTERNO', 'CARGO_C'],  # PODE ACRESCENTAR UMA TERCEIRA OU TIRAR UMA COLUNA
-    how='left',            # left ou inner ou 
+    how='left',            # left ou right ou inner ou outer = (full) ou cross
     suffixes=('_A', '_B')  # Sufixo para colunas duplicadas
 )
-print(Fore.GREEN + f"\n📊 LEFT JOIN:")
-print(Fore.CYAN + f"\n{df_2.head()}")
-print(Fore.WHITE + f"   Tabela A: {len(df_2)} registros")
-print(Fore.CYAN + f"\n{df_3.head()}")
-print(Fore.WHITE + f"   Tabela B: {len(df_3)} registros")
-print(Fore.CYAN + f"\n{df_join.head()}")
-print(Fore.WHITE + f"   Resultado: {len(df_join)} registros")
-print(Fore.CYAN + f"\n   Colunas A: {list(df_2.columns)[:5]}...")
-print(Fore.CYAN + f"   Colunas B: {list(df_3.columns)[:5]}...")
-print(Fore.CYAN + f"   Colunas J: {list(df_join.columns)[:5]}...")
-print(Fore.WHITE + f"\n   Registros sem match: {df_join[df_join.columns[-1]].isna().sum()}")
 
-# ============================================================================
-# JOIN COM INDICADOR (mostra origem de cada registro)
-# ============================================================================
-
-df_join = pd.merge(
-    df_2,                    # Tabela A
-    df_3,                  # Tabela B
-    on='ID_INTERNO',  # Coluna em comum
-    how='outer',      # Tipo de JOIN
-    suffixes=('_A', '_B'),
-    indicator='ORIGEM'  # Coluna indicando origem
-)
-print(Fore.GREEN + f"\n📊 JOIN COM INDICADOR:")
-print(Fore.CYAN + f"\n{df_join['ORIGEM'].value_counts()}")
-print(Fore.WHITE + f"\n   both    = existe nas duas tabelas")
-print(Fore.WHITE + f"   left_only = só na tabela A")
-print(Fore.WHITE + f"   right_only = só na tabela B")
+# print(Fore.GREEN + f"\n📊 VERIFICAÇÃO DO JOIN:")
+# print(Fore.WHITE + f"   Tabela A (df):   {len(df_2)} registros")
+# print(Fore.WHITE + f"   Tabela B (df_2): {len(df_3)} registros")
+# print(Fore.WHITE + f"   Resultado:       {len(df_join)} registros")
+# print(Fore.CYAN + f"\n   Colunas A: {list(df_2.columns)[:5]}...")
+# print(Fore.CYAN + f"   Colunas B: {list(df_3.columns)[:5]}...")
+# print(Fore.CYAN + f"   Colunas J: {list(df_join.columns)[:5]}...")
+# print(Fore.WHITE + f"\n   Registros sem match: {df_join[df_join.columns[-1]].isna().sum()}")
 
 
 
 
+
+print(Fore.GREEN + f"Lista de Colunas")
+for i, col in enumerate(df_join.columns, 1):
+    print(Fore.CYAN + f"   {i:3d}. {col}")
+print(Fore.WHITE + f"   Total: {len(df_join.columns)} colunas")
+
+# SELECT NOME, CPF, ESCOLA FROM df
+colunas_selecionadas = [
+    'REGIAO_C_A',
+    'NOMEDE_C_A',
+    'UAC_A',
+    'NOMEUA_C_A',
+    'CARGO_C',
+    'NOMECAR_C_A',
+    'CATEG_C_A',
+    'ID_INTERNO'
+   ]  # Lista de colunas desejadas
+print(Fore.GREEN + f"\n📊 SELECT {', '.join(colunas_selecionadas)}:")
+print(Fore.WHITE + f"   Total de registros: {len(df)}")
+print(Fore.WHITE + f"   Colunas: {colunas_selecionadas}")
+print(Fore.CYAN + f"\n{df_join[colunas_selecionadas]}")
