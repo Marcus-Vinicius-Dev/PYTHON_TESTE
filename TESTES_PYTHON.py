@@ -51,8 +51,8 @@ init(autoreset=True) # reseta a cor no próximo print
 
 
 ###################################################################### CHOR_MATTATHIAS ######################################################################
-pasta_arquivo = os.chdir(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE') 
-pasta_trecho = os.path.basename(f'{pasta_arquivo}') 
+pasta_arquivo = os.chdir(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE') # C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER
+pasta_trecho = os.path.basename(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE') # C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER
 arquivo_excel = 'CHOR_MATTATHIAS.xlsx'
 abas = pd.read_excel(arquivo_excel, sheet_name=None)
 # print(Fore.GREEN + f"\nUSANDO ARQUIVO '{arquivo_excel}' DA PASTA '{pasta_trecho}'")
@@ -102,8 +102,8 @@ O ARQUIVO POSSUI 1 ABA(S)
 ###################################################################### CHOR_MATTATHIAS ######################################################################
 
 ###################################################################### CTG_MATTATHIAS ######################################################################
-pasta_arquivo_2 = os.chdir(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE') 
-pasta_trecho_2 = os.path.basename(f'{pasta_arquivo}') 
+pasta_arquivo_2 = os.chdir(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE') # C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER
+pasta_trecho_2 = os.path.basename(r'C:\Users\marcus.silva05\Desktop\git_projetos\PYTHON_TESTE') # C:\Users\marcus.silva05\Desktop\PRODUÇÃO\SED_PREENCHER
 arquivo_excel_2 = 'CTG_MATTATHIAS.xlsx'
 abas_2 = pd.read_excel(arquivo_excel_2, sheet_name=None)
 # print(Fore.GREEN + f"\nUSANDO ARQUIVO '{arquivo_excel_2}' DA PASTA '{pasta_trecho_2}'")
@@ -161,44 +161,48 @@ df_3 = pd.read_excel(arquivo_excel_2, sheet_name=aba_selecionada_3)  # Carrega a
 
 """
 
-###################################################################### CTG_MATTATHIAS ######################################################################
+# ============================================================================
+# LEFT JOIN (equivalente SQL)
+# ============================================================================
+# SQL: LEFT JOIN CTG_MATTATHIAS B ON A.ID_INTERNO = B.ID_INTERNO
+
+df_join = pd.merge(
+    df_3,                    
+    df_2,                  
+    on=['ID_INTERNO', 'CARGO_C'],  # PODE ACRESCENTAR UMA TERCEIRA OU TIRAR UMA COLUNA
+    how='left',            # left ou inner ou 
+    suffixes=('_A', '_B')  # Sufixo para colunas duplicadas
+)
+print(Fore.GREEN + f"\n📊 LEFT JOIN:")
+print(Fore.CYAN + f"\n{df_2.head()}")
+print(Fore.WHITE + f"   Tabela A: {len(df_2)} registros")
+print(Fore.CYAN + f"\n{df_3.head()}")
+print(Fore.WHITE + f"   Tabela B: {len(df_3)} registros")
+print(Fore.CYAN + f"\n{df_join.head()}")
+print(Fore.WHITE + f"   Resultado: {len(df_join)} registros")
+print(Fore.CYAN + f"\n   Colunas A: {list(df_2.columns)[:5]}...")
+print(Fore.CYAN + f"   Colunas B: {list(df_3.columns)[:5]}...")
+print(Fore.CYAN + f"   Colunas J: {list(df_join.columns)[:5]}...")
+print(Fore.WHITE + f"\n   Registros sem match: {df_join[df_join.columns[-1]].isna().sum()}")
+
+# ============================================================================
+# JOIN COM INDICADOR (mostra origem de cada registro)
+# ============================================================================
+
+df_join = pd.merge(
+    df_2,                    # Tabela A
+    df_3,                  # Tabela B
+    on='ID_INTERNO',  # Coluna em comum
+    how='outer',      # Tipo de JOIN
+    suffixes=('_A', '_B'),
+    indicator='ORIGEM'  # Coluna indicando origem
+)
+print(Fore.GREEN + f"\n📊 JOIN COM INDICADOR:")
+print(Fore.CYAN + f"\n{df_join['ORIGEM'].value_counts()}")
+print(Fore.WHITE + f"\n   both    = existe nas duas tabelas")
+print(Fore.WHITE + f"   left_only = só na tabela A")
+print(Fore.WHITE + f"   right_only = só na tabela B")
 
 
-print(Fore.GREEN + f"Lista de Colunas de {aba_selecionada}")
-for i, col in enumerate(df.columns, 1):
-    print(Fore.CYAN + f"   {i:3d}. {col}")
-print(Fore.WHITE + f"   Total: {len(df.columns)} colunas")
-
-print(Fore.GREEN + f"Lista de Colunas de {aba_selecionada_2}")
-for i, col in enumerate(df_2.columns, 1):
-    print(Fore.CYAN + f"   {i:3d}. {col}")
-print(Fore.WHITE + f"   Total: {len(df_2.columns)} colunas")
-
-print(Fore.GREEN + f"Lista de Colunas de {aba_selecionada_3}")
-for i, col in enumerate(df_3.columns, 1):
-    print(Fore.CYAN + f"   {i:3d}. {col}")
-print(Fore.WHITE + f"   Total: {len(df_3.columns)} colunas")
 
 
-
-df_final = pd.merge(df, df_2, on='ID_INTERNO', how='left', suffixes=('_A', '_B')) \
-    .assign( # how='left'ou 'right' ou 'inner' ou 'outter' (outer = full)
-        CARGO=lambda x: x['CARGO_C_A'].astype(str) + ' - ' + x['NOMECAR_C'] # CONCATENAÇÃO
-    ) \
-    .rename(columns={
-        'REGIAO_C': 'REGIAO',           # sem sufixo (só no df_2)
-        'NOMEDE_C': 'URE',              # sem sufixo (só no df_2)
-        'NOMEESC': 'ESCOLA',            # sem sufixo (só no df)
-        'ID_INTERNO': 'ID',           # ← sufixo (existe nos dois A e B)
-        'CATEG_C': 'CATEGORIA',         # sem sufixo (só no df_2)
-        'DISC_CONCURSO': 'DISCIPLINA',  # sem sufixo (só no df_2)
-        'DEN_MATERIA': 'MATERIA',       # sem sufixo (só no df)
-        'JORNADA_A': 'JORNADA',         # ← sufixo _A (existe nos dois)
-        'TOT_GERAL_AULA': 'TOTAL_AULAS' # sem sufixo (só no df)
-    }) \
-    [['REGIAO', 'URE', 'ESCOLA', 'ID', 'CARGO', 'CATEGORIA',
-      'DISCIPLINA', 'MATERIA', 'JORNADA', 'TOTAL_AULAS']] # SEQUÊNCIA 
-
-print(Fore.GREEN + f"\n📊 DATAFRAME FINAL:")
-print(Fore.WHITE + f"   Registros: {len(df_final)}")
-print(Fore.CYAN + f"\n{df_final.head(10)}")
