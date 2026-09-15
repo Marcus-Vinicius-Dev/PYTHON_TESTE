@@ -161,47 +161,6 @@ df_3 = pd.read_excel(arquivo_excel_2, sheet_name=aba_selecionada_3)  # Carrega a
 
 """
 
-# ============================================================================
-# LEFT JOIN (equivalente SQL)
-# ============================================================================
-# SQL: LEFT JOIN CTG_MATTATHIAS B ON A.ID_INTERNO = B.ID_INTERNO
-
-df_join = pd.merge(
-    df_3,                    
-    df_2,                  
-    on=['ID_INTERNO', 'CARGO_C'],  # PODE ACRESCENTAR UMA TERCEIRA OU TIRAR UMA COLUNA
-    how='left',            # left ou inner ou 
-    suffixes=('_A', '_B')  # Sufixo para colunas duplicadas
-)
-print(Fore.GREEN + f"\n📊 LEFT JOIN:")
-print(Fore.CYAN + f"\n{df_2.head()}")
-print(Fore.WHITE + f"   Tabela A: {len(df_2)} registros")
-print(Fore.CYAN + f"\n{df_3.head()}")
-print(Fore.WHITE + f"   Tabela B: {len(df_3)} registros")
-print(Fore.CYAN + f"\n{df_join.head()}")
-print(Fore.WHITE + f"   Resultado: {len(df_join)} registros")
-print(Fore.CYAN + f"\n   Colunas A: {list(df_2.columns)[:5]}...")
-print(Fore.CYAN + f"   Colunas B: {list(df_3.columns)[:5]}...")
-print(Fore.CYAN + f"   Colunas J: {list(df_join.columns)[:5]}...")
-print(Fore.WHITE + f"\n   Registros sem match: {df_join[df_join.columns[-1]].isna().sum()}")
-
-# ============================================================================
-# JOIN COM INDICADOR (mostra origem de cada registro)
-# ============================================================================
-
-df_join = pd.merge(
-    df_2,                    # Tabela A
-    df_3,                  # Tabela B
-    on='ID_INTERNO',  # Coluna em comum
-    how='outer',      # Tipo de JOIN
-    suffixes=('_A', '_B'),
-    indicator='ORIGEM'  # Coluna indicando origem
-)
-print(Fore.GREEN + f"\n📊 JOIN COM INDICADOR:")
-print(Fore.CYAN + f"\n{df_join['ORIGEM'].value_counts()}")
-print(Fore.WHITE + f"\n   both    = existe nas duas tabelas")
-print(Fore.WHITE + f"   left_only = só na tabela A")
-print(Fore.WHITE + f"   right_only = só na tabela B")
 
 
 
